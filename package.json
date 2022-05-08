@@ -4,9 +4,11 @@
   "description": "webgl website from awards academy",
   "main": "index.js",
   "scripts": {
-    "start": "npm run development",
-    "development": "webpack serve --progress --config webpack.config.development.js",
-    "build": "webpack --progress --config webpack.config.build.js"
+    "backend:build": "node app.js",
+    "backend:development": "nodemon app.js",
+    "frontend:development": "webpack serve --progress --config webpack.config.development.js",
+    "frontend:build": "webpack --progress --config webpack.config.build.js",
+    "start": "concurrently --kill-others \"npm run backend:development\" \"npm run frontend:development\""
   },
   "keywords": [
     "webgl"
@@ -35,6 +37,7 @@
     "imagemin-pngquant": "^9.0.2",
     "imagemin-svgo": "^10.0.1",
     "mini-css-extract-plugin": "^2.6.0",
+    "nodemon": "^2.0.16",
     "postcss-loader": "^6.2.1",
     "raw-loader": "^4.0.2",
     "sass": "^1.51.0",
@@ -44,5 +47,10 @@
     "webpack-cli": "^4.9.2",
     "webpack-dev-server": "^4.9.0",
     "webpack-merge": "^5.8.0"
+  },
+  "dependencies": {
+    "concurrently": "^7.1.0",
+    "express": "^4.18.1",
+    "pug": "^3.0.2"
   }
 }
