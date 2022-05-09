@@ -34,6 +34,7 @@ app.use(methodOverride());
 if (process.env.NODE_ENV === "development") {
   app.use(errorHandler());
 }
+app.use(express.static(path.join(__dirname, "public")));
 
 /*
 ===============================================================================
