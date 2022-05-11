@@ -7,9 +7,15 @@ block content
   .collections
     .collections__wrapper
       .collections__titles
-        each collection, index in collections
-          .collections__titles__label=`${home.data.collection} ${Numbers(index)}`
-          .collections__titles__title=collection.data.title
+      each line in [0, 1, 2]
+        .collections__titles__wrapper
+          each collection, index in collections
+            .collections__titles__item
+              .collections__titles__label
+                .home__titles__label__text!=`${home.data.collection}<br>${Numbers(index)}`
+
+              .collections__titles__title
+                .collections__titles__title__text=collection.data.title
 
       .collections__gallery
         .collections__gallery__wrapper
