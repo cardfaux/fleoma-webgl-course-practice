@@ -9,6 +9,8 @@ import Paragraph from "../animations/Paragraph";
 import Label from "../animations/Label";
 import Highlight from "../animations/Highlight";
 
+import AsyncLoad from "./AsyncLoad";
+
 import { ColorsManager } from "./Colors";
 
 export default class Page {
@@ -20,6 +22,8 @@ export default class Page {
       animationsTitles: '[data-animation="title"]',
       animationsParagraphs: '[data-animation="paragraph"]',
       animationsLabels: '[data-animation="label"]',
+
+      preloaders: "[data-src]",
     };
 
     this.id = id;
@@ -58,6 +62,7 @@ export default class Page {
     });
 
     this.createAnimations();
+    this.createPreloader();
   }
 
   createAnimations() {
@@ -105,6 +110,15 @@ export default class Page {
     this.animations.push(...this.animationsLabels);
   }
 
+  createPreloader() {
+    this.preloaders = map(this.elements.preloaders, (element) => {
+      return new AsyncLoad({ element });
+    });
+  }
+
+  /***
+   * Animations.
+   */
   show() {
     return new Promise((resolve) => {
       ColorsManager.change({
@@ -134,7 +148,7 @@ export default class Page {
 
   hide() {
     return new Promise((resolve) => {
-      this.removeEventListeners();
+      this.destroy();
 
       this.animationOut = GSAP.timeline();
 
@@ -145,6 +159,9 @@ export default class Page {
     });
   }
 
+  /***
+   * Events.
+   */
   onMouseWheel(event) {
     const { pixelY } = NormalizeWheel(event);
 
@@ -160,6 +177,9 @@ export default class Page {
     each(this.animations, (animation) => animation.onResize());
   }
 
+  /***
+   * Loops.
+   */
   update() {
     this.scroll.target = GSAP.utils.clamp(
       0,
@@ -184,11 +204,21 @@ export default class Page {
     }
   }
 
+  /***
+   * Listeners.
+   */
   addEventListeners() {
     window.addEventListener("mousewheel", this.onMouseWheelEvent);
   }
 
   removeEventListeners() {
     window.removeEventListener("mousewheel", this.onMouseWheelEvent);
+  }
+
+  /***
+   * Destroy.
+   */
+  destroy() {
+    this.removeEventListeners();
   }
 }

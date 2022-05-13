@@ -1,4 +1,5 @@
 import each from "lodash/each";
+import NormalizeWheel from "normalize-wheel";
 
 import Navigation from "./components/Navigation";
 import Preloader from "./components/Preloader";
@@ -60,7 +61,14 @@ class App {
     this.page.show();
   }
 
-  async onChange(url) {
+  onPopState() {
+    this.onChange({
+      url: window.location.pathname,
+      push: false,
+    });
+  }
+
+  async onChange({ url, push = true }) {
     await this.page.hide();
 
     const request = await window.fetch(url);
@@ -68,6 +76,10 @@ class App {
     if (request.status === 200) {
       const html = await request.text();
       const div = document.createElement("div");
+
+      if (push) {
+        window.history.pushState({}, "", url);
+      }
 
       div.innerHTML = html;
 
@@ -99,6 +111,48 @@ class App {
     }
   }
 
+  onTouchDown(event) {
+    if (this.canvas && this.canvas.onTouchDown) {
+      this.canvas.onTouchDown(event);
+    }
+
+    if (this.page && this.page.onTouchDown) {
+      this.page.onTouchDown(event);
+    }
+  }
+
+  onTouchMove(event) {
+    if (this.canvas && this.canvas.onTouchMove) {
+      this.canvas.onTouchMove(event);
+    }
+
+    if (this.page && this.page.onTouchDown) {
+      this.page.onTouchMove(event);
+    }
+  }
+
+  onTouchUp(event) {
+    if (this.canvas && this.canvas.onTouchUp) {
+      this.canvas.onTouchUp(event);
+    }
+
+    if (this.page && this.page.onTouchDown) {
+      this.page.onTouchUp(event);
+    }
+  }
+
+  onWheel(event) {
+    const normalizedWheel = NormalizeWheel(event);
+
+    if (this.canvas && this.canvas.onWheel) {
+      this.canvas.onWheel(normalizedWheel);
+    }
+
+    if (this.page && this.page.onWheel) {
+      this.page.onWheel(normalizedWheel);
+    }
+  }
+
   /***
    * LOOP
    */
@@ -106,12 +160,28 @@ class App {
     if (this.page && this.page.update) {
       this.page.update();
     }
+
+    if (this.canvas && this.canvas.update) {
+      this.canvas.update(this.page.scroll);
+    }
+
     this.frame = window.requestAnimationFrame(this.update.bind(this));
   }
   /***
    * LISTENERS
    */
   addEventListeners() {
+    window.addEventListener("popstate", this.onPopState.bind(this));
+    window.addEventListener("mousewheel", this.onWheel.bind(this));
+
+    window.addEventListener("mousedown", this.onTouchDown.bind(this));
+    window.addEventListener("mousemove", this.onTouchMove.bind(this));
+    window.addEventListener("mouseup", this.onTouchUp.bind(this));
+
+    window.addEventListener("touchstart", this.onTouchDown.bind(this));
+    window.addEventListener("touchmove", this.onTouchMove.bind(this));
+    window.addEventListener("touchend", this.onTouchUp.bind(this));
+
     window.addEventListener("resize", this.onResize.bind(this));
   }
 
@@ -124,7 +194,7 @@ class App {
 
         const { href } = link;
 
-        this.onChange(href);
+        this.onChange({ url: href });
       };
     });
   }

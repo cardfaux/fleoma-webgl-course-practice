@@ -18,6 +18,8 @@ const methodOverride = require("method-override");
 const Prismic = require("@prismicio/client");
 const PrismicDOM = require("prismic-dom");
 
+const UAParser = require("ua-parser-js");
+
 // initialize express
 const app = express();
 const port = process.env.PORT || 3000;
@@ -73,6 +75,12 @@ PRISMIC MIDDLEWARE
 ===============================================================================
 */
 app.use((req, res, next) => {
+  const ua = UAParser(req.headers["user-agent"]);
+
+  res.locals.isDesktop = ua.device.type === undefined;
+  res.locals.isPhone = ua.device.type === "mobile";
+  res.locals.isTablet = ua.device.type === "tablet";
+
   res.locals.Link = handleLinkResolver;
 
   res.locals.Numbers = (index) => {
