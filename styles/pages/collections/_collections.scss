@@ -64,7 +64,7 @@
 .collections__gallery {
   @extend %cover;
 
-  visibility: hidden;
+  // visibility: hidden;
   z-index: 1;
 }
 
@@ -115,6 +115,16 @@
   bottom: 8rem;
   left: 8rem;
   position: absolute;
+  // i added this opacity
+  opacity: 0;
+  transition: opacity 0.4s ease;
+
+  // i added this class start
+  &--active {
+    opacity: 1;
+    transition-delay: 0.4s;
+  }
+  // i added this class stop
 }
 
 .collections__article__title {
