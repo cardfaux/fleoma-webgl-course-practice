@@ -1,10 +1,10 @@
 import GSAP from "gsap";
 
-import each from "lodash/each";
+// import each from "lodash/each";
 
 import Animation from "../classes/Animation";
 
-import { calculate, split } from "../utils/text";
+// import { calculate, split } from "../utils/text";
 
 export default class Title extends Animation {
   constructor({ element, elements }) {
@@ -13,11 +13,11 @@ export default class Title extends Animation {
       elements,
     });
 
-    split({ element: this.element, append: true });
+    // split({ element: this.element, append: true });
 
-    split({ element: this.element, append: true });
+    // split({ element: this.element, append: true });
 
-    this.elementLinesSpans = this.element.querySelectorAll("span span");
+    // this.elementLinesSpans = this.element.querySelectorAll("span span");
   }
 
   animateIn() {
@@ -25,25 +25,26 @@ export default class Title extends Animation {
       delay: 0.5,
     });
 
-    this.timeline.set(this.element, {
+    this.timeline.to(this.element, {
       autoAlpha: 1,
+      duration: 1,
     });
 
-    each(this.elementsLines, (line, index) => {
-      this.timeline.fromTo(
-        line,
-        {
-          y: "100%",
-        },
-        {
-          delay: index * 0.2,
-          duration: 1.5,
-          ease: "expo.out",
-          y: "0%",
-        },
-        0
-      );
-    });
+    // each(this.elementsLines, (line, index) => {
+    //   this.timeline.fromTo(
+    //     line,
+    //     {
+    //       y: "100%",
+    //     },
+    //     {
+    //       delay: index * 0.2,
+    //       duration: 1.5,
+    //       ease: "expo.out",
+    //       y: "0%",
+    //     },
+    //     0
+    //   );
+    // });
   }
 
   animateOut() {
@@ -52,7 +53,7 @@ export default class Title extends Animation {
     });
   }
 
-  onResize() {
-    this.elementsLines = calculate(this.elementLinesSpans);
-  }
+  // onResize() {
+  //   this.elementsLines = calculate(this.elementLinesSpans);
+  // }
 }

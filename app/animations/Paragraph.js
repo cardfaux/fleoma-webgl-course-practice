@@ -1,10 +1,8 @@
 import GSAP from "gsap";
 
-import each from "lodash/each";
-
 import Animation from "../classes/Animation";
 
-import { calculate, split } from "../utils/text";
+// import { calculate, split } from "../utils/text";
 
 export default class Paragraph extends Animation {
   constructor({ element, elements }) {
@@ -13,7 +11,7 @@ export default class Paragraph extends Animation {
       elements,
     });
 
-    this.elementLinesSpans = split({ element: this.element, append: true });
+    // this.elementLinesSpans = split({ element: this.element, append: true });
   }
 
   animateIn() {
@@ -21,27 +19,28 @@ export default class Paragraph extends Animation {
       delay: 0.5,
     });
 
-    this.timeline.set(this.element, {
+    this.timeline.to(this.element, {
       autoAlpha: 1,
+      duration: 1,
     });
 
-    each(this.elementsLines, (line, index) => {
-      this.timeline.fromTo(
-        line,
-        {
-          autoAlpha: 0,
-          y: "100%",
-        },
-        {
-          autoAlpha: 1,
-          delay: index * 0.2,
-          duration: 1.5,
-          ease: "expo.out",
-          y: "0%",
-        },
-        0
-      );
-    });
+    // each(this.elementsLines, (line, index) => {
+    //   this.timeline.fromTo(
+    //     line,
+    //     {
+    //       autoAlpha: 0,
+    //       y: "100%",
+    //     },
+    //     {
+    //       autoAlpha: 1,
+    //       delay: index * 0.2,
+    //       duration: 1.5,
+    //       ease: "expo.out",
+    //       y: "0%",
+    //     },
+    //     0
+    //   );
+    // });
   }
 
   animateOut() {
@@ -50,7 +49,7 @@ export default class Paragraph extends Animation {
     });
   }
 
-  onResize() {
-    this.elementsLines = calculate(this.elementLinesSpans);
-  }
+  // onResize() {
+  //   this.elementsLines = calculate(this.elementLinesSpans);
+  // }
 }
