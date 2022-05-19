@@ -5,8 +5,7 @@
   // background: $color-quicksand;
   // color: $color-quarter-spanish-white;
   transform: translateY(100%);
-  transition: opacity 0.5s 0.5s ease, transform 0s 0.5s,
-    visibility 0.5s 0.5s ease;
+  transition: opacity 0.5s 0.5s ease, transform 0s 0.5s, visibility 0.5s 0.5s ease;
 
   &--active {
     @extend %page--active;
@@ -15,7 +14,7 @@
     transition-delay: 0;
   }
 
-  @include media("<phone") {
+  @include media('<phone') {
     height: auto;
   }
 }
@@ -30,7 +29,7 @@
     opacity: 1;
   }
 
-  @include media("<phone") {
+  @include media('<phone') {
     display: block;
     margin: auto;
     padding: 15rem 0 31.5rem;
@@ -44,7 +43,7 @@
   visibility: hidden;
   width: 55.4rem;
 
-  @include media("<phone") {
+  @include media('<phone') {
     height: 93.4rem;
     margin: 0 auto 7.8rem;
     width: 100%;
@@ -60,7 +59,7 @@
 .detail__information {
   padding-left: 8.2rem;
 
-  @include media("<phone") {
+  @include media('<phone') {
     padding-left: 0;
   }
 }
@@ -86,7 +85,7 @@
 .detail__information__content {
   padding-left: 18rem;
 
-  @include media("<phone") {
+  @include media('<phone') {
     padding-left: 0;
   }
 }
@@ -110,7 +109,7 @@
   margin-right: 3.75rem;
   width: 4rem;
 
-  @include media("<phone") {
+  @include media('<phone') {
     height: 9.2rem;
     margin-right: 5.8rem;
     width: 9.2rem;
@@ -150,7 +149,7 @@
   padding-right: 2.5rem;
   width: 15rem;
 
-  @include media("<phone") {
+  @include media('<phone') {
     padding-right: 5rem;
   }
 }
@@ -189,14 +188,15 @@
   width: fit-content;
 
   &:before {
-    content: "↗";
+    content: '↗';
     font-family: $font-suisse-bp;
     font-weight: 100;
     margin-left: 1rem;
     margin-top: -0.2rem;
   }
 
-  @include media("<phone") {
+  @include media('<phone') {
+
   }
 }
 
@@ -228,7 +228,7 @@
     opacity: 1;
   }
 
-  @include media("<phone") {
+  @include media('<phone') {
     bottom: 12rem;
     height: 13rem;
     width: 26.8rem;

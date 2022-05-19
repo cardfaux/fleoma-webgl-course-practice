@@ -1,3 +1,4 @@
+import GSAP from "gsap";
 import { Renderer, Camera, Transform } from "ogl";
 
 import About from "./About";
@@ -89,6 +90,7 @@ export default class Canvas {
       gl: this.gl,
       scene: this.scene,
       sizes: this.sizes,
+      transition: this.transition,
     });
   }
 
@@ -106,6 +108,7 @@ export default class Canvas {
       gl: this.gl,
       scene: this.scene,
       sizes: this.sizes,
+      transition: this.transition,
     });
   }
 
@@ -146,6 +149,7 @@ export default class Canvas {
         sizes: this.sizes,
         url,
       });
+      this.transition.setElement(this.collections || this.detail);
     }
   }
 
@@ -158,23 +162,14 @@ export default class Canvas {
 
     if (template === "collections") {
       // this.gl.canvas.style.zIndex = 1000;
-
       this.createCollections();
-
-      if (this.transition) {
-        this.transition.animateCollections(this.collections);
-      }
     } else if (this.collections) {
       // this.gl.canvas.style.zIndex = "";
-
       this.destroyCollections();
     }
 
     if (template === "detail") {
       this.createDetail();
-      if (this.transition) {
-        this.transition.animateDetail(this.detail);
-      }
     } else if (this.detail) {
       this.destroyDetail();
     }

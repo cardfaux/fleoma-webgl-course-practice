@@ -6,17 +6,22 @@ import fragment from "../../../shaders/plane-fragment.glsl";
 import vertex from "../../../shaders/plane-vertex.glsl";
 
 export default class {
-  constructor({ gl, scene, sizes }) {
+  constructor({ gl, scene, sizes, transition }) {
+    this.id = "detail";
     this.element = document.querySelector(".detail__media__image");
     this.gl = gl;
     this.scene = scene;
     this.sizes = sizes;
+    this.transition = transition;
 
     this.geometry = new Plane(this.gl);
 
     this.createTexture();
     this.createProgram();
     this.createMesh();
+    this.createBounds({ sizes: this.sizes });
+
+    this.show();
   }
 
   createTexture() {
@@ -30,7 +35,7 @@ export default class {
       fragment,
       vertex,
       uniforms: {
-        uAlpha: { value: 1 },
+        uAlpha: { value: 0 },
         tMap: { value: this.texture },
       },
     });
@@ -58,7 +63,17 @@ export default class {
   /***
    * Animations.
    */
-  show() {}
+  show() {
+    if (this.transition) {
+      this.transition.animate(this.mesh, (_) => {
+        this.program.uniforms.uAlpha.value = 1;
+      });
+    } else {
+      GSAP.to(this.program.uniforms.uAlpha, {
+        value: 1,
+      });
+    }
+  }
 
   hide() {}
 
@@ -106,9 +121,14 @@ export default class {
   }
 
   update() {
-    if (!this.bounds) return;
-
     this.updateX();
     this.updateY();
+  }
+
+  /***
+   * Destroy.
+   */
+  destroy() {
+    this.scene.removeChild(this.mesh);
   }
 }

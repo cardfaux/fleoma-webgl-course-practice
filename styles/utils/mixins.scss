@@ -12,13 +12,13 @@
   justify-content: center;
 }
 
-@mixin ratio($height, $width) {
+@mixin ratio ($height, $width) {
   font-size: 0;
   overflow: hidden;
   position: relative;
 
   &:after {
-    content: "";
+    content: '';
     display: inline-block;
     padding-top: $width / $height * 100%;
     width: 100%;

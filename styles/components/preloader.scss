@@ -2,32 +2,23 @@
   @extend %center;
   @extend %cover;
 
-  overflow: hidden;
   background: $color-contessa;
   color: $color-quarter-spanish-white;
   text-align: center;
-  z-index: z("preloader");
+  z-index: z('preloader');
 }
 
 .preloader__text {
   @extend %title-53;
 
-  max-width: 68rem;
-  opacity: 1;
-  // opacity: 0;
-  overflow: hidden;
-
-  span {
-    overflow: hidden;
-    display: inline-block;
-  }
+  max-width: 67rem;
+  opacity: 0;
 
   span span {
     @extend %title-53;
 
     display: inline-block;
     transform-origin: center center 0.5em;
-    overflow: hidden;
   }
 }
 
@@ -40,7 +31,7 @@
   position: absolute;
   transform: translateX(-50%);
 
-  @include media("<phone") {
+  @include media('<phone') {
     font-size: 2.4rem;
   }
 }

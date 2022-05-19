@@ -17,7 +17,7 @@
 
   &:before,
   &:after {
-    content: "";
+    content: '';
     height: 35rem;
     left: 0;
     position: absolute;
@@ -26,20 +26,12 @@
   }
 
   &:before {
-    background: linear-gradient(
-      to bottom,
-      $color-contessa 15%,
-      rgba($color-contessa, 0) 100%
-    );
+    background: linear-gradient(to bottom, $color-contessa 15%, rgba($color-contessa, 0) 100%);
     top: 0;
   }
 
   &:after {
-    background: linear-gradient(
-      to top,
-      $color-contessa 15%,
-      rgba($color-contessa, 0) 100%
-    );
+    background: linear-gradient(to top, $color-contessa 15%, rgba($color-contessa, 0) 100%);
     bottom: 0;
   }
 }
@@ -75,7 +67,7 @@
   width: 100%;
   visibility: hidden;
 
-  @include media("<=phone") {
+  @include media('<=phone') {
     padding: 0 1.5rem;
   }
 }
@@ -100,7 +92,7 @@
     transform: translateY(40rem);
   }
 
-  @include media("<=phone") {
+  @include media('<=phone') {
     padding: 1.5rem;
     width: 50%;
 
@@ -116,7 +108,6 @@
 .home__gallery__media__image {
   display: block;
   width: 100%;
-  // opacity: 1;
 }
 
 .home__link {
@@ -142,7 +133,7 @@
     vertical-align: middle;
   }
 
-  @include media("<phone") {
+  @include media('<phone') {
     bottom: 7.5rem;
     height: 13.7rem;
     width: 55rem;

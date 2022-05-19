@@ -117,24 +117,28 @@ export default class Page {
   /***
    * Animations.
    */
-  show() {
+  show(animation) {
     return new Promise((resolve) => {
       ColorsManager.change({
         backgroundColor: this.element.getAttribute("data-background"),
         color: this.element.getAttribute("data-color"),
       });
 
-      this.animationIn = GSAP.timeline();
+      if (animation) {
+        this.animationIn = animation;
+      } else {
+        this.animationIn = GSAP.timeline();
 
-      this.animationIn.fromTo(
-        this.element,
-        {
-          autoAlpha: 0,
-        },
-        {
-          autoAlpha: 1,
-        }
-      );
+        this.animationIn.fromTo(
+          this.element,
+          {
+            autoAlpha: 0,
+          },
+          {
+            autoAlpha: 1,
+          }
+        );
+      }
 
       this.animationIn.call((_) => {
         this.addEventListeners();

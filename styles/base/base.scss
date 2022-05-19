@@ -14,9 +14,8 @@ html {
   line-height: 1;
   overflow: hidden;
   position: fixed;
-  position: relative;
 
-  @include media("<phone") {
+  @include media('<phone') {
     font-size: calc(100vw / 750 * 10);
   }
 }
@@ -38,7 +37,7 @@ a {
 canvas {
   pointer-events: none;
   position: relative;
-  z-index: z("canvas");
+  z-index: z('canvas');
 }
 
 button {

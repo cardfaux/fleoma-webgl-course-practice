@@ -28,7 +28,7 @@
     margin-top: 40rem;
   }
 
-  @include media("<phone") {
+  @include media('<phone') {
     &:nth-child(5) {
       justify-content: flex-end;
     }
@@ -46,7 +46,7 @@
     flex-direction: row-reverse;
   }
 
-  @include media("<phone") {
+  @include media('<phone') {
     .about__content:nth-child(3) & {
       flex-direction: column-reverse;
     }
@@ -68,7 +68,7 @@
 .about__content__box {
   display: flex;
 
-  @include media("<=phone") {
+  @include media('<=phone') {
     margin: auto;
     width: 60.9rem;
 
@@ -97,7 +97,7 @@
   text-transform: uppercase;
   width: 18rem;
 
-  @include media("<=phone") {
+  @include media('<=phone') {
     font-size: 2.4rem;
     line-height: 1.5;
     padding-right: 2.5rem;
@@ -122,7 +122,7 @@
     margin-top: 2.5rem;
   }
 
-  @include media("<=phone") {
+  @include media('<=phone') {
     width: calc(100% - 15rem);
   }
 }
@@ -155,7 +155,7 @@
     width: 60.8rem;
   }
 
-  @include media("<=phone") {
+  @include media('<=phone') {
     .about__content:nth-child(3) & {
       height: 91.4rem;
       margin-left: 0;
