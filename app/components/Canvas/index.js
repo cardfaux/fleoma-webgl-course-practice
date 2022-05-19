@@ -2,7 +2,10 @@ import { Renderer, Camera, Transform } from "ogl";
 
 import About from "./About";
 import Collections from "./Collections";
+import Detail from "./Detail";
 import Home from "./Home";
+
+import Transition from "./Transition";
 
 export default class Canvas {
   constructor({ template }) {
@@ -96,13 +99,30 @@ export default class Canvas {
   }
 
   /***
+   * Detail.
+   */
+  createDetail() {
+    this.detail = new Detail({
+      gl: this.gl,
+      scene: this.scene,
+      sizes: this.sizes,
+    });
+  }
+
+  destroyDetail() {
+    if (!this.detail) return;
+    this.detail.destroy();
+    this.detail = null;
+  }
+
+  /***
    * Events.
    */
   onPreloaded() {
     this.onChangeEnd(this.template);
   }
 
-  onChangeStart() {
+  onChangeStart(template, url) {
     if (this.about) {
       this.about.hide();
     }
@@ -111,6 +131,21 @@ export default class Canvas {
     }
     if (this.home) {
       this.home.hide();
+    }
+
+    this.isFromCollectionsToDetail =
+      this.template === "collections" && url.indexOf("detail") > -1;
+    this.isFromDetailToCollections =
+      this.template === "detail" && url.indexOf("collections") > -1;
+
+    if (this.isFromCollectionsToDetail || this.isFromDetailToCollections) {
+      this.transition = new Transition({
+        collections: this.collections,
+        gl: this.gl,
+        scene: this.scene,
+        sizes: this.sizes,
+        url,
+      });
     }
   }
 
@@ -125,10 +160,23 @@ export default class Canvas {
       // this.gl.canvas.style.zIndex = 1000;
 
       this.createCollections();
+
+      if (this.transition) {
+        this.transition.animateCollections(this.collections);
+      }
     } else if (this.collections) {
       // this.gl.canvas.style.zIndex = "";
 
       this.destroyCollections();
+    }
+
+    if (template === "detail") {
+      this.createDetail();
+      if (this.transition) {
+        this.transition.animateDetail(this.detail);
+      }
+    } else if (this.detail) {
+      this.destroyDetail();
     }
 
     if (template === "home") {
@@ -136,6 +184,8 @@ export default class Canvas {
     } else {
       this.destroyHome();
     }
+
+    this.template = template;
   }
 
   onResize() {
@@ -166,6 +216,10 @@ export default class Canvas {
       this.collections.onResize(values);
     }
 
+    if (this.detail) {
+      this.detail.onResize(values);
+    }
+
     if (this.home) {
       this.home.onResize(values);
     }
@@ -188,6 +242,10 @@ export default class Canvas {
 
     if (this.collections) {
       this.collections.onTouchDown(values);
+    }
+
+    if (this.detail) {
+      this.detail.onTouchDown(values);
     }
 
     if (this.home) {
@@ -215,6 +273,10 @@ export default class Canvas {
 
     if (this.collections) {
       this.collections.onTouchMove(values);
+    }
+
+    if (this.detail) {
+      this.detail.onTouchMove(values);
     }
 
     if (this.home) {
@@ -248,6 +310,10 @@ export default class Canvas {
       this.collections.onTouchUp(values);
     }
 
+    if (this.detail) {
+      this.detail.onTouchUp(values);
+    }
+
     if (this.home) {
       this.home.onTouchUp(values);
     }
@@ -271,6 +337,9 @@ export default class Canvas {
     }
     if (this.collections) {
       this.collections.update();
+    }
+    if (this.detail) {
+      this.detail.update();
     }
     if (this.home) {
       this.home.update();
